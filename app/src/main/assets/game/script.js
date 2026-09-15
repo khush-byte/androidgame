@@ -98,7 +98,7 @@
       const mat=new THREE.MeshStandardMaterial({color:0x17262d,roughness:1});
       const m=new THREE.Mesh(geo,mat);m.position.set(side*(12+Math.random()*7),0,z);m.scale.set(1,1.1,1.6);scene.add(m);scenery.push(m);
     }
-    for(let z=-210;z<15;z+=24){addMountain(-1,z);addMountain(1,z+10);}
+    // for(let z=-210;z<15;z+=24){addMountain(-1,z);addMountain(1,z+10);}
 
     // ---------------- CITY / STREET LIGHTS ----------------
     let buildings=[];
