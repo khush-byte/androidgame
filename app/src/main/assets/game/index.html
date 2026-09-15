@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>OVERDRIVE RUN — 3D</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="wrap">
+  <div id="scene-container"></div>
+  <div id="mobileControls" aria-hidden="true">
+    <button id="leftControl" class="drive-btn left">◀</button>
+    <button id="nitroControl" class="drive-btn nitro">NITRO</button>
+    <button id="rightControl" class="drive-btn right">▶</button>
+  </div>
+
+  <div id="vignette"></div>
+  <div id="speedLines"></div>
+
+  <div id="hud">
+    <div class="hud-card">
+      <div class="label">ДИСТАНЦИЯ</div>
+      <div class="value" id="scoreVal">0</div>
+      <div class="unit">МЕТРОВ</div>
+    </div>
+    <div class="hud-card right">
+      <div class="label">РЕКОРД</div>
+      <div class="value small" id="bestVal">0</div>
+      <div class="unit">ЛУЧШИЙ ЗАЕЗД</div>
+    </div>
+  </div>
+
+  <div id="nitroHud">
+    <div class="nitro-title">NITRO</div>
+    <div class="nitro-bar"><div id="nitroFill"></div></div>
+    <div class="nitro-hint">W / ↑ / SPACE</div>
+  </div>
+
+  <div id="startScreen" class="screen">
+    <div class="brand-kicker">NIGHT HIGHWAY • 03</div>
+    <h1>OVERDRIVE<span>RUN</span></h1>
+    <p>СКОРОСТЬ. РЕАКЦИЯ. ИДЕАЛЬНАЯ ТРАЕКТОРИЯ.</p>
+    <button id="startBtn">НАЧАТЬ ЗАЕЗД <span>→</span></button>
+    <div class="hint">
+      <b>A / D</b> или <b>← →</b> — смена полосы<br>
+      <b>W / ↑ / SPACE</b> — нитро<br><br>
+      Трафик движется впереди. Не сталкивайся.
+    </div>
+  </div>
+
+  <div id="gameOverScreen" class="screen">
+    <div class="brand-kicker danger">RACE TERMINATED</div>
+    <h1>СТОЛКНОВЕНИЕ</h1>
+    <p id="finalScore">Дистанция: 0 м</p>
+    <button id="retryBtn">НОВЫЙ ЗАЕЗД <span>↻</span></button>
+  </div>
+
+  <div id="loadingScreen" class="screen">
+    <div class="loader-ring"></div>
+    <p>ИНИЦИАЛИЗАЦИЯ 3D-ДВИЖКА...</p>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="script.js"></script>
+<script>
+(function(){
+  function press(code){
+    window.dispatchEvent(new KeyboardEvent('keydown',{code:code,key:code,bubbles:true}));
+  }
+  function release(code){
+    window.dispatchEvent(new KeyboardEvent('keyup',{code:code,key:code,bubbles:true}));
+  }
+  const controls=[
+    ['leftControl','ArrowLeft'],['rightControl','ArrowRight'],['nitroControl','Space']
+  ];
+  controls.forEach(([id,code])=>{
+    const el=document.getElementById(id); if(!el) return;
+    const down=e=>{e.preventDefault(); press(code);};
+    const up=e=>{e.preventDefault(); release(code);};
+    el.addEventListener('touchstart',down,{passive:false});
+    el.addEventListener('touchend',up,{passive:false});
+    el.addEventListener('touchcancel',up,{passive:false});
+    el.addEventListener('mousedown',down);
+    el.addEventListener('mouseup',up);
+    el.addEventListener('mouseleave',up);
+  });
+})();
+</script>
+</body>
+</html>
